@@ -2,52 +2,133 @@ package com.example.fincas_grupo3.application.services.finca;
 
 import com.example.fincas_grupo3.application.dto.finca.FincaRequestDTO;
 import com.example.fincas_grupo3.application.dto.finca.FincaResponseDTO;
+import com.example.fincas_grupo3.application.exceptions.DireccionNoEncontradaException;
 import com.example.fincas_grupo3.application.exceptions.FincaNoEncontradaException;
+import com.example.fincas_grupo3.application.exceptions.ServicioNoEncontradoException;
+import com.example.fincas_grupo3.application.exceptions.UsuarioNoEncontradoException;
 import com.example.fincas_grupo3.application.mappers.finca.FincaMapper;
+import com.example.fincas_grupo3.application.usecases.direccion.DireccionUseCases;
 import com.example.fincas_grupo3.application.usecases.finca.FincaUseCases;
+import com.example.fincas_grupo3.application.usecases.servicio.ServiciosUseCases;
+import com.example.fincas_grupo3.application.usecases.usuario.UsuarioUseCases;
+import com.example.fincas_grupo3.domain.models.direccion.Direccion;
 import com.example.fincas_grupo3.domain.models.finca.Finca;
+import com.example.fincas_grupo3.domain.models.servicio.Servicio;
+import com.example.fincas_grupo3.domain.models.usuario.Usuario;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FincaServiceImpl implements FincaService {
     private final FincaMapper fincaMapper;
     private final FincaUseCases fincaUseCases;
+    private final DireccionUseCases direccionUseCases;
+    private final UsuarioUseCases usuarioUseCases;
+    private final ServiciosUseCases serviciosUseCases;
 
-    public FincaServiceImpl(FincaMapper fincaMapper, FincaUseCases fincaUseCases) {
+    public FincaServiceImpl(FincaMapper fincaMapper, FincaUseCases fincaUseCases, DireccionUseCases direccionUseCases, UsuarioUseCases usuarioUseCases, ServiciosUseCases serviciosUseCases) {
         this.fincaMapper = fincaMapper;
         this.fincaUseCases = fincaUseCases;
+        this.direccionUseCases = direccionUseCases;
+        this.usuarioUseCases = usuarioUseCases;
+        this.serviciosUseCases = serviciosUseCases;
     }
 
     @Override
     public FincaResponseDTO guardar(FincaRequestDTO dto) {
         Finca model = fincaMapper.toModel(dto);
-        Finca fincaGuardada = fincaUseCases.crearFinca(model);
 
+
+        Direccion direccionCompleta = direccionUseCases.obtenerDireccionPorId(dto.getDireccionId());
+        if (direccionCompleta == null) {
+            throw new DireccionNoEncontradaException("La dirección con id " + dto.getDireccionId() + " no fue encontrada.");
+        }
+
+        Usuario usuarioCompleto = usuarioUseCases.obtenerUsuarioPorId(dto.getUsuarioId());
+        if (usuarioCompleto == null) {
+            throw new UsuarioNoEncontradoException("El usuario con id " + dto.getUsuarioId() + " no fue encontrado.");
+        }
+
+        model.setDireccion(direccionCompleta);
+        model.setUsuario(usuarioCompleto);
+
+
+        if (dto.getServicioIds() != null && !dto.getServicioIds().isEmpty()) {
+            List<Servicio> serviciosCompletos = dto.getServicioIds().stream()
+                    .map(id -> {
+                        Servicio servicio = serviciosUseCases.obtenerServicioPorId(id);
+                        if (servicio == null) {
+                            throw new ServicioNoEncontradoException("Servicio con id " + id + " no encontrado.");
+                        }
+                        return servicio;
+                    })
+                    .collect(Collectors.toList());
+            model.setServicios(serviciosCompletos);
+        } else {
+            model.setServicios(Collections.emptyList());
+        }
+
+        Finca fincaGuardada = fincaUseCases.crearFinca(model);
         return fincaMapper.toDTO(fincaGuardada);
     }
 
     @Override
     public FincaResponseDTO actualizar(FincaRequestDTO dto) {
-        verificarSiExisteFinca(dto.getId());
+
+        Finca fincaExistente = verificarSiExisteFinca(dto.getId());
+
 
         Finca model = fincaMapper.toModel(dto);
-        Finca fincaActualizada = fincaUseCases.actualizarFinca(model);
+        model.setId(fincaExistente.getId()); // Aseguramos que el ID sea el correcto
 
+
+        Direccion direccionCompleta = direccionUseCases.obtenerDireccionPorId(dto.getDireccionId());
+        if (direccionCompleta == null) {
+            throw new DireccionNoEncontradaException("La dirección con id " + dto.getDireccionId() + " no fue encontrada.");
+        }
+
+        Usuario usuarioCompleto = usuarioUseCases.obtenerUsuarioPorId(dto.getUsuarioId());
+        if (usuarioCompleto == null) {
+            throw new UsuarioNoEncontradoException("El usuario con id " + dto.getUsuarioId() + " no fue encontrado.");
+        }
+
+        model.setDireccion(direccionCompleta);
+        model.setUsuario(usuarioCompleto);
+
+
+        if (dto.getServicioIds() != null && !dto.getServicioIds().isEmpty()) {
+            List<Servicio> serviciosCompletos = dto.getServicioIds().stream()
+                    .map(id -> {
+                        Servicio servicio = serviciosUseCases.obtenerServicioPorId(id);
+                        if (servicio == null) {
+                            throw new ServicioNoEncontradoException("Servicio con id " + id + " no encontrado.");
+                        }
+                        return servicio;
+                    })
+                    .collect(Collectors.toList());
+            model.setServicios(serviciosCompletos);
+        } else {
+            model.setServicios(Collections.emptyList());
+        }
+
+        Finca fincaActualizada = fincaUseCases.actualizarFinca(model);
         return fincaMapper.toDTO(fincaActualizada);
     }
 
     @Override
     public List<FincaResponseDTO> obetenerTodas() {
-        return fincaUseCases.obtenerFincas().stream().map(fincaMapper::toDTO).toList();
+        return fincaUseCases.obtenerFincas().stream()
+                .map(fincaMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public FincaResponseDTO obtenerPorId(Long id) {
         Finca finca = verificarSiExisteFinca(id);
         return fincaMapper.toDTO(finca);
-
     }
 
     @Override
@@ -58,9 +139,8 @@ public class FincaServiceImpl implements FincaService {
 
     private Finca verificarSiExisteFinca(Long id) {
         Finca finca = fincaUseCases.obtenerFincaPorId(id);
-
         if (finca == null) {
-            throw new FincaNoEncontradaException("Finca no encontrada");
+            throw new FincaNoEncontradaException("Finca con id " + id + " no encontrada");
         }
         return finca;
     }
