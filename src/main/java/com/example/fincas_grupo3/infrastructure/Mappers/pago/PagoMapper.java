@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.pago;
+package com.example.fincas_grupo3.infrastructure.mappers.pago;
 
 import com.example.fincas_grupo3.domain.models.pago.Pago;
 import com.example.fincas_grupo3.infrastructure.entities.pago.PagoEntidad;

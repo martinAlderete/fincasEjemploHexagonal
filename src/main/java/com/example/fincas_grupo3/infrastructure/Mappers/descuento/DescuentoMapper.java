@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.descuento;
+package com.example.fincas_grupo3.infrastructure.mappers.descuento;
 
 import com.example.fincas_grupo3.domain.models.descuento.Descuento;
 import com.example.fincas_grupo3.infrastructure.entities.descuento.DescuentoEntidad;

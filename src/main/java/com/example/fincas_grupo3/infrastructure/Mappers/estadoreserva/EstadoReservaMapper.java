@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.estadoreserva;
+package com.example.fincas_grupo3.infrastructure.mappers.estadoreserva;
 
 import com.example.fincas_grupo3.domain.models.estadoreserva.EstadoReserva;
 import com.example.fincas_grupo3.infrastructure.entities.estadoreserva.EstadoReservaEntidad;

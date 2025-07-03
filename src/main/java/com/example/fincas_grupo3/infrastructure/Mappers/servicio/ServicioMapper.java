@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.servicio;
+package com.example.fincas_grupo3.infrastructure.mappers.servicio;
 
 import com.example.fincas_grupo3.domain.models.servicio.Servicio;
 import com.example.fincas_grupo3.infrastructure.entities.servicio.ServicioEntidad;

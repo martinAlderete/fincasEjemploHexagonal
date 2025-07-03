@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.publicacion;
+package com.example.fincas_grupo3.infrastructure.mappers.publicacion;
 
 import com.example.fincas_grupo3.domain.models.publicacion.Publicacion;
 import com.example.fincas_grupo3.infrastructure.entities.publicacion.PublicacionEntidad;

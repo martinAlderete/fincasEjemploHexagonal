@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.ciudad;
+package com.example.fincas_grupo3.infrastructure.mappers.ciudad;
 
 import com.example.fincas_grupo3.application.exceptions.ProvinciaNoEncontradaException;
 import com.example.fincas_grupo3.domain.models.ciudad.Ciudad;
@@ -27,9 +27,6 @@ public abstract class CiudadMapper {
 
     @Named("mapProvinciaIdToProvinciaEntity")
     protected ProvinciaEntidad mapProvinciaIdToProvinciaEntity(Long provinciaId) {
-        if (provinciaId == null) {
-            return null;
-        }
         return jpaProvinciaRepository.findById(provinciaId)
                 .orElseThrow(() -> new ProvinciaNoEncontradaException("Provincia con id " + provinciaId + " no encontrada al mapear la ciudad."));
     }

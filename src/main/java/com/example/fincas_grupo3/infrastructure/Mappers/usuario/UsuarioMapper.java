@@ -1,9 +1,7 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.usuario;
+package com.example.fincas_grupo3.infrastructure.mappers.usuario;
 
 import com.example.fincas_grupo3.application.exceptions.DireccionNoEncontradaException;
-import com.example.fincas_grupo3.domain.models.direccion.Direccion;
 import com.example.fincas_grupo3.domain.models.usuario.Usuario;
-import com.example.fincas_grupo3.infrastructure.Mappers.direccion.DireccionMapper;
 import com.example.fincas_grupo3.infrastructure.entities.direccion.DireccionEntidad;
 import com.example.fincas_grupo3.infrastructure.entities.usuario.UsuarioEntidad;
 import com.example.fincas_grupo3.infrastructure.repositories.direccion.JPADireccionRepository;
@@ -20,7 +18,7 @@ public abstract class UsuarioMapper {
     protected JPADireccionRepository jpaDireccionRepository;
 
 
-    @Mapping(source = "direccion.id", target = "direccion", qualifiedByName = "mapDireccionIdToDireccionEntity")
+    @Mapping(source = "direccion", target = "direccion")
     public abstract UsuarioEntidad toEntity(Usuario usuario);
 
 
@@ -28,12 +26,12 @@ public abstract class UsuarioMapper {
     public abstract Usuario toModel(UsuarioEntidad entidad);
 
 
-    @Named("mapDireccionIdToDireccionEntity")
-    protected DireccionEntidad mapDireccionIdToDireccionEntity(Long direccionId) {
-        if (direccionId == null) {
-            return null;
-        }
-        return jpaDireccionRepository.findById(direccionId)
-                .orElseThrow(() -> new DireccionNoEncontradaException("La dirección con id " + direccionId + " asignada al usuario no fue encontrada."));
-    }
+//    @Named("mapDireccionIdToDireccionEntity")
+//    protected DireccionEntidad mapDireccionIdToDireccionEntity(Long direccionId) {
+//        if (direccionId == null) {
+//            return null;
+//        }
+//        return jpaDireccionRepository.findById(direccionId)
+//                .orElseThrow(() -> new DireccionNoEncontradaException("La dirección con id " + direccionId + " asignada al usuario no fue encontrada."));
+//    }
 }

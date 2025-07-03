@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.tiporeserva;
+package com.example.fincas_grupo3.infrastructure.mappers.tiporeserva;
 
 import com.example.fincas_grupo3.domain.models.tiporeserva.TipoReserva;
 import com.example.fincas_grupo3.infrastructure.entities.tiporeserva.TipoReservaEntidad;

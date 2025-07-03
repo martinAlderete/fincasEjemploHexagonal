@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.foto;
+package com.example.fincas_grupo3.infrastructure.mappers.foto;
 
 import com.example.fincas_grupo3.domain.models.foto.Foto;
 import com.example.fincas_grupo3.infrastructure.entities.foto.FotoEntidad;

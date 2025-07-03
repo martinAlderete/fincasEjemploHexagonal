@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.provincia;
+package com.example.fincas_grupo3.infrastructure.mappers.provincia;
 
 
 import com.example.fincas_grupo3.domain.models.provincia.Provincia;

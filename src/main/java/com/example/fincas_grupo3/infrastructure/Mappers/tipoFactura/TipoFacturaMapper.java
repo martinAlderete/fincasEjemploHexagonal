@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.tipoFactura;
+package com.example.fincas_grupo3.infrastructure.mappers.tipoFactura;
 
 import com.example.fincas_grupo3.domain.models.tipoFactura.TipoFactura;
 import com.example.fincas_grupo3.infrastructure.entities.tipoFactura.TipoFacturaEntidad;

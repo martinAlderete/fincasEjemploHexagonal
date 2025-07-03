@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.estadoPago;
+package com.example.fincas_grupo3.infrastructure.mappers.estadoPago;
 
 import com.example.fincas_grupo3.domain.models.estadoPago.EstadoPago;
 

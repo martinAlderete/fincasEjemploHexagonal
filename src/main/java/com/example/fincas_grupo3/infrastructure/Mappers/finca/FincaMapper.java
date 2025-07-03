@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.finca;
+package com.example.fincas_grupo3.infrastructure.mappers.finca;
 
 import com.example.fincas_grupo3.domain.models.finca.Finca;
 import com.example.fincas_grupo3.infrastructure.entities.finca.FincaEntidad;

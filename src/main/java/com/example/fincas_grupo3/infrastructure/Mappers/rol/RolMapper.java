@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.rol;
+package com.example.fincas_grupo3.infrastructure.mappers.rol;
 
 import com.example.fincas_grupo3.domain.models.rol.Rol;
 import com.example.fincas_grupo3.infrastructure.entities.rol.RolEntidad;

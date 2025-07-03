@@ -1,4 +1,4 @@
-package com.example.fincas_grupo3.infrastructure.Mappers.estadopublicacion;
+package com.example.fincas_grupo3.infrastructure.mappers.estadopublicacion;
 
 import com.example.fincas_grupo3.domain.models.estadopublicacion.EstadoPublicacion;
 import com.example.fincas_grupo3.infrastructure.entities.estadopublicacion.EstadoPublicacionEntidad;
